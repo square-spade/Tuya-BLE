@@ -3,7 +3,7 @@ from __future__ import annotations
 
 from typing_extensions import Final
 
-DOMAIN: Final = "tuya_local_ble"
+DOMAIN: Final = "tuya_ble"
 
 DEVICE_METADATA_UUIDS: Final = "uuids"
 
