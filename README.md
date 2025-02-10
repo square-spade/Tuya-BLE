@@ -40,13 +40,25 @@
 
 <h2 align="center">Configuration & Setup</h2>
 <p align="center">
-  Once installed, the integration attempts to automatically discover all supported Bluetooth devices.
-  If needed, you can also add discoverable devices manually through the Home Assistant UI.
-</p>
-<p align="center">
-  <b>Note:</b> Although this integration works locally, you must provide a device ID and encryption key for each Tuya BLE device. <br>
-  These credentials are the same as those used by the official Tuya integration and can be obtained from the Tuya IoT platform. <br>
-  For detailed instructions, please refer to the official <a href="https://www.home-assistant.io/integrations/tuya/">Tuya integration documentation</a>.
+  Once installed, you will need to manually create a `devices.json` file in `config/tuya_local_ble` with the following format:
+
+  ```json
+  {
+    "XX:XX:XX:XX:XX:XX": {
+    "address": "XX:XX:XX:XX:XX:XX",
+    "uuid": "<device UUID>",
+    "local_key": "<device local key>",
+    "device_id": "<device ID>",
+    "category": "jtmspro",
+    "product_id": "rlyxv7pe",
+    "device_name": "<name>> Lock",
+    "product_model": "AT1",
+    "product_name": "Smart lock"
+    }
+  }
+  ```
+
+  You can obtain the device MAC address, UUID, local key, device ID, and product ID using [TinyTuya](https://github.com/jasonacox/tinytuya).
 </p>
 
 <h2 align="center">Supported Devices</h2>
