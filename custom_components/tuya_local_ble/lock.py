@@ -36,7 +36,7 @@ from typing import Any
 @dataclass
 class TuyaBLELockMapping:
     dp_id: int
-    dp_id_lock: int
+    dp_id_lock: int | None = None
     dp_id_unlock: int
     dp_id_nop: int
     keep_connect_timer: int
@@ -63,6 +63,26 @@ class TuyaBLECategoryLockMapping:
 
 
 mapping: dict[str, TuyaBLECategoryLockMapping] = {
+    "ms": TuyaBLECategoryLockMapping(
+        products={
+            "k53ok3u9":  # Tuya Smart Lock
+            [
+                TuyaBLELockMapping(
+                    dp_id_unlock=6,
+                    dp_id=47,
+                    dp_id_lock=46,
+                    # refer to sdk, dp 52 is for deleting temp password
+                    # should be safe as a dummy keep alive message
+                    dp_id_nop=52,
+                    keep_connect=True,
+                    keep_connect_timer=60,
+                    description=LockEntityDescription(
+                        key="manual_lock"
+                    ),
+                ),
+            ]
+        }
+    ), 
     "jtmspro": TuyaBLECategoryLockMapping(
         products={
             "rlyxv7pe":  # Gimdow Smart Lock
