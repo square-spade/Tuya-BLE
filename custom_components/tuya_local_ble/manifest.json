@@ -12,6 +12,6 @@
   "dependencies": ["bluetooth_adapters"],
   "documentation": "https://github.com/Square-Spade/Tuya-BLE",
   "iot_class": "local_push",
-  "version": "0.1",
-  "issue_tracker": "https://github.com/{{cookiecutter.github_user}}/{{cookiecutter.project_name}}/issues"
+  "issue_tracker": "https://github.com/{{cookiecutter.github_user}}/{{cookiecutter.project_name}}/issues",
+  "version": "1.0"
 }
