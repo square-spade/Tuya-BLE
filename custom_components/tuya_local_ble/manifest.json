@@ -7,10 +7,10 @@
       "service_data_uuid": "0000a201-0000-1000-8000-00805f9b34fb"
     }
   ],
-  "codeowners": ["@ShonP40"],
+  "codeowners": ["@Square-Spade"],
   "config_flow": true,
   "dependencies": ["bluetooth_adapters"],
-  "documentation": "https://github.com/ShonP40/Tuya-BLE",
+  "documentation": "https://github.com/Square-Spade/Tuya-BLE",
   "iot_class": "local_push",
   "version": "0.1",
   "issue_tracker": "https://github.com/{{cookiecutter.github_user}}/{{cookiecutter.project_name}}/issues"
