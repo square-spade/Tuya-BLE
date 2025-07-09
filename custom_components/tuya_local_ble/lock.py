@@ -33,6 +33,7 @@ TuyaBLELockIsAvailable = Callable[["TuyaBLELock", TuyaBLEProductInfo], bool] | N
 
 from typing import Any
 
+
 @dataclass
 class TuyaBLELockMapping:
     dp_id: int
@@ -46,6 +47,7 @@ class TuyaBLELockMapping:
     dp_type: TuyaBLEDataPointType | None = None
     is_available: TuyaBLELockIsAvailable = None
 
+
 @dataclass
 class TuyaBLELockMapping(TuyaBLELockMapping):
     description: LockEntityDescription = field(
@@ -56,6 +58,7 @@ class TuyaBLELockMapping(TuyaBLELockMapping):
     )
     is_available: TuyaBLELockIsAvailable = 0
 
+
 @dataclass
 class TuyaBLECategoryLockMapping:
     products: dict[str, list[TuyaBLELockMapping]] | None = None
@@ -65,8 +68,7 @@ class TuyaBLECategoryLockMapping:
 mapping: dict[str, TuyaBLECategoryLockMapping] = {
     "ms": TuyaBLECategoryLockMapping(
         products={
-            "k53ok3u9":  # Tuya Smart Lock
-            [
+            "k53ok3u9": [  # Tuya Smart Lock
                 TuyaBLELockMapping(
                     dp_id_unlock=6,
                     dp_id=47,
@@ -76,17 +78,14 @@ mapping: dict[str, TuyaBLECategoryLockMapping] = {
                     dp_id_nop=52,
                     keep_connect=True,
                     keep_connect_timer=60,
-                    description=LockEntityDescription(
-                        key="manual_lock"
-                    ),
+                    description=LockEntityDescription(key="manual_lock"),
                 ),
             ]
         }
-    ), 
+    ),
     "jtmspro": TuyaBLECategoryLockMapping(
         products={
-            "rlyxv7pe":  # Gimdow Smart Lock
-            [
+            "rlyxv7pe": [  # Gimdow Smart Lock
                 TuyaBLELockMapping(
                     dp_id_unlock=6,
                     dp_id_lock=46,
@@ -96,13 +95,11 @@ mapping: dict[str, TuyaBLECategoryLockMapping] = {
                     dp_id_nop=52,
                     keep_connect=True,
                     keep_connect_timer=60,
-                    description=LockEntityDescription(
-                        key="manual_lock"
-                    ),
+                    description=LockEntityDescription(key="manual_lock"),
                 ),
             ]
         }
-    ), 
+    ),
 }
 
 
@@ -141,7 +138,9 @@ class TuyaBLELock(TuyaBLEEntity, LockEntity):
         self._isjammed = False
         self._update_attrs()
         if mapping.keep_connect:
-            self._thread = Timer(self._mapping.keep_connect_timer, self.send_nop_request)
+            self._thread = Timer(
+                self._mapping.keep_connect_timer, self.send_nop_request
+            )
             self._thread.start()
             self._datapoint_nop = device.datapoints.get_or_create(
                 self._mapping.dp_id_nop,
@@ -187,7 +186,8 @@ class TuyaBLELock(TuyaBLEEntity, LockEntity):
 
     # Alarm properties
     @property
-    def should_poll(self) -> bool: return False
+    def should_poll(self) -> bool:
+        return False
 
     def _update_attrs(self) -> None:
         self._attr_is_locking = self.is_locking
@@ -221,11 +221,10 @@ class TuyaBLELock(TuyaBLEEntity, LockEntity):
             False,
         )
 
-        #Gimdow need true to activate lock/unlock commands
+        # Gimdow need true to activate lock/unlock commands
         self._hass.create_task(datapoint.set_value(True))
         self._commanded = True
         self._commanded_timer = datetime.now()
-
 
     def update_device_state(self):
         datapoint = self._device.datapoints[self._mapping.dp_id]
@@ -235,8 +234,8 @@ class TuyaBLELock(TuyaBLEEntity, LockEntity):
             else:
                 self._current_state = LockState.LOCKED
             if self._commanded:
-                if ( self._current_state != self._target_state):
-                    if ( datetime.now() > self._commanded_timer + timedelta(seconds = 12) ):
+                if self._current_state != self._target_state:
+                    if datetime.now() > self._commanded_timer + timedelta(seconds=12):
                         self._isjammed = True
                         self._commanded = False
                 else:
@@ -281,4 +280,3 @@ async def async_setup_entry(
                 )
             )
     async_add_entities(entities)
-

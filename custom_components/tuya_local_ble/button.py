@@ -42,6 +42,7 @@ def is_fingerbot_in_push_mode(self: TuyaBLEButton, product: TuyaBLEProductInfo) 
             result = datapoint.value == 0
     return result
 
+
 @dataclass
 class TuyaBLEFingerbotModeMapping(TuyaBLEButtonMapping):
     description: ButtonEntityDescription = field(
@@ -52,6 +53,7 @@ class TuyaBLEFingerbotModeMapping(TuyaBLEButtonMapping):
     )
     is_available: TuyaBLEButtonIsAvailable = is_fingerbot_in_push_mode
 
+
 @dataclass
 class TuyaBLEButtonMapping(TuyaBLEButtonMapping):
     description: ButtonEntityDescription = field(
@@ -61,6 +63,7 @@ class TuyaBLEButtonMapping(TuyaBLEButtonMapping):
         )
     )
     is_available: TuyaBLEButtonIsAvailable = 0
+
 
 @dataclass
 class TuyaBLECategoryButtonMapping:
@@ -78,12 +81,7 @@ mapping: dict[str, TuyaBLECategoryButtonMapping] = {
                 ],
             ),
             **dict.fromkeys(
-                [
-                    "blliqpsj",
-                    "ndvkgsrm",
-                    "yiihr7zh", 
-                    "neq16kgd"
-                ],  # Fingerbot Plus
+                ["blliqpsj", "ndvkgsrm", "yiihr7zh", "neq16kgd"],  # Fingerbot Plus
                 [
                     TuyaBLEFingerbotModeMapping(dp_id=2),
                 ],
@@ -106,8 +104,7 @@ mapping: dict[str, TuyaBLECategoryButtonMapping] = {
     ),
     "znhsb": TuyaBLECategoryButtonMapping(
         products={
-            "cdlandip":  # Smart water bottle
-            [
+            "cdlandip": [  # Smart water bottle
                 TuyaBLEButtonMapping(
                     dp_id=109,
                     description=ButtonEntityDescription(
