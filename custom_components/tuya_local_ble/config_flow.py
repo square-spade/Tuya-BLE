@@ -7,17 +7,15 @@ from typing import Any
 
 import voluptuous as vol
 
-from homeassistant.config_entries import (
-    ConfigFlow,
-    ConfigFlowResult    
-)
+from homeassistant.config_entries import ConfigFlow, ConfigFlowResult
 from homeassistant.components.bluetooth import (
     BluetoothServiceInfoBleak,
     async_discovered_service_info,
 )
 from homeassistant.const import CONF_ADDRESS
 from homeassistant.core import callback
-#from homeassistant.data_entry_flow import FlowResult
+
+# from homeassistant.data_entry_flow import FlowResult
 
 from .tuya_ble import SERVICE_UUID, TuyaBLEDeviceCredentials
 
@@ -28,6 +26,7 @@ from .devices import TuyaBLEData, get_device_readable_name
 from .keyman import HASSTuyaBLEDeviceManager
 
 _LOGGER = logging.getLogger(__name__)
+
 
 class TuyaBLEConfigFlow(ConfigFlow, domain=DOMAIN):
     """Handle a config flow for Tuya BLE."""
@@ -52,7 +51,7 @@ class TuyaBLEConfigFlow(ConfigFlow, domain=DOMAIN):
         self._discovery_info = discovery_info
         if self._manager is None:
             self._manager = HASSTuyaBLEDeviceManager(self.hass, self._data)
-        #await self._manager.build_cache()
+        # await self._manager.build_cache()
         self.context["title_placeholders"] = {
             "name": await get_device_readable_name(
                 discovery_info,

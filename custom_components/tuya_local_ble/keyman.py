@@ -41,6 +41,7 @@ CONF_TUYA_DEVICE_KEYS = [
     CONF_PRODUCT_MODEL,
 ]
 
+
 class HASSTuyaBLEDeviceManager(AbstaractTuyaBLEDeviceManager):
     """Cloud connected manager of the Tuya BLE devices credentials."""
 
@@ -49,18 +50,17 @@ class HASSTuyaBLEDeviceManager(AbstaractTuyaBLEDeviceManager):
         self._hass = hass
         self._data = data
         self._devicedata = None
-        
-        #devicedata_path = os.path.join(self._hass.config.config_dir, CONF_CRED_FILE)
-        #f = open(devicedata_path)
-        #self._devicedata = json.load(f)
+
+        # devicedata_path = os.path.join(self._hass.config.config_dir, CONF_CRED_FILE)
+        # f = open(devicedata_path)
+        # self._devicedata = json.load(f)
 
     async def load_device_config(self):
         devicedata_path = os.path.join(self._hass.config.config_dir, CONF_CRED_FILE)
 
-        async with aiofiles.open(devicedata_path, mode='r') as f:
+        async with aiofiles.open(devicedata_path, mode="r") as f:
             contents = await f.read()
         self._devicedata = json.loads(contents)
-
 
     async def get_device_credentials(
         self,
@@ -71,7 +71,7 @@ class HASSTuyaBLEDeviceManager(AbstaractTuyaBLEDeviceManager):
         """Get credentials of the Tuya BLE device."""
         credentials: dict[str, any] | None = None
         result: TuyaBLEDeviceCredentials | None = None
-        
+
         if self._devicedata == None:
             await self.load_device_config()
 

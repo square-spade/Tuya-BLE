@@ -17,13 +17,13 @@ from homeassistant.const import (
     CONCENTRATION_PARTS_PER_MILLION,
     PERCENTAGE,
     SIGNAL_STRENGTH_DECIBELS_MILLIWATT,
-    #TEMP_CELSIUS,
-    #UnitOfTemperature.CELSIUS,
-    #VOLUME_MILLILITERS,
-    #UnitOfVolume.MILLILITERS,
+    # TEMP_CELSIUS,
+    # UnitOfTemperature.CELSIUS,
+    # VOLUME_MILLILITERS,
+    # UnitOfVolume.MILLILITERS,
     UnitOfVolume,
     UnitOfTemperature,
-    UnitOfTime
+    UnitOfTime,
 )
 from homeassistant.core import HomeAssistant, callback
 from homeassistant.helpers.entity import EntityCategory
@@ -152,7 +152,7 @@ mapping: dict[str, TuyaBLECategorySensorMapping] = {
     "ms": TuyaBLECategorySensorMapping(
         products={
             **dict.fromkeys(
-                ["ludzroix", "isk2p555", "k53ok3u9"], # Smart Lock
+                ["ludzroix", "isk2p555", "k53ok3u9"],  # Smart Lock
                 [
                     TuyaBLESensorMapping(
                         dp_id=21,
@@ -173,8 +173,7 @@ mapping: dict[str, TuyaBLECategorySensorMapping] = {
     ),
     "jtmspro": TuyaBLECategorySensorMapping(
         products={
-            "rlyxv7pe":  # Smart Lock
-            [
+            "rlyxv7pe": [  # Smart Lock
                 TuyaBLESensorMapping(
                     dp_id=9,
                     description=SensorEntityDescription(
@@ -197,7 +196,7 @@ mapping: dict[str, TuyaBLECategorySensorMapping] = {
                 ),
             ]
         }
-    ),      
+    ),
     "szjqr": TuyaBLECategorySensorMapping(
         products={
             **dict.fromkeys(
@@ -225,12 +224,7 @@ mapping: dict[str, TuyaBLECategorySensorMapping] = {
                 ],
             ),
             **dict.fromkeys(
-                [
-                    "blliqpsj",
-                    "ndvkgsrm",
-                    "yiihr7zh", 
-                    "neq16kgd"
-                ],  # Fingerbot Plus
+                ["blliqpsj", "ndvkgsrm", "yiihr7zh", "neq16kgd"],  # Fingerbot Plus
                 [
                     TuyaBLEBatteryMapping(dp_id=12),
                 ],
@@ -292,8 +286,7 @@ mapping: dict[str, TuyaBLECategorySensorMapping] = {
     ),
     "znhsb": TuyaBLECategorySensorMapping(
         products={
-            "cdlandip":  # Smart water bottle
-            [
+            "cdlandip": [  # Smart water bottle
                 TuyaBLETemperatureMapping(
                     dp_id=101,
                 ),

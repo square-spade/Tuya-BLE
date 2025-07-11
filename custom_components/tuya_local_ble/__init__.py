@@ -32,6 +32,7 @@ PLATFORMS: list[Platform] = [
 
 _LOGGER = logging.getLogger(__name__)
 
+
 async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
     """Set up Tuya BLE from a config entry."""
     address: str = entry.data[CONF_ADDRESS]
@@ -49,18 +50,18 @@ async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
 
     coordinator = TuyaBLECoordinator(hass, device)
 
-    '''
+    """
     try:
         await device.update()
     except BLEAK_EXCEPTIONS as ex:
         raise ConfigEntryNotReady(
             f"Could not communicate with Tuya BLE device with address {address}"
         ) from ex
-    '''
-    #hass.async_create_task(device.update())
+    """
+    # hass.async_create_task(device.update())
 
     await device.update()
-    
+
     @callback
     def _async_update_ble(
         service_info: bluetooth.BluetoothServiceInfoBleak,
@@ -89,7 +90,7 @@ async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
     )
 
     await hass.config_entries.async_forward_entry_setups(entry, PLATFORMS)
-    #entry.async_on_unload(entry.add_update_listener(_async_update_listener))
+    # entry.async_on_unload(entry.add_update_listener(_async_update_listener))
 
     async def _async_stop(event: Event) -> None:
         """Close the connection."""
@@ -99,6 +100,7 @@ async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
         hass.bus.async_listen_once(EVENT_HOMEASSISTANT_STOP, _async_stop)
     )
     return True
+
 
 async def async_unload_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
     """Unload a config entry."""

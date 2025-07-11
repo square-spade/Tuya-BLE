@@ -28,14 +28,10 @@ TuyaBLESwitchGetter = (
 )
 
 
-TuyaBLESwitchIsAvailable = (
-    Callable[["TuyaBLESwitch", TuyaBLEProductInfo], bool] | None
-)
+TuyaBLESwitchIsAvailable = Callable[["TuyaBLESwitch", TuyaBLEProductInfo], bool] | None
 
 
-TuyaBLESwitchSetter = (
-    Callable[["TuyaBLESwitch", TuyaBLEProductInfo, bool], None] | None
-)
+TuyaBLESwitchSetter = Callable[["TuyaBLESwitch", TuyaBLEProductInfo, bool], None] | None
 
 
 @dataclass
@@ -91,8 +87,7 @@ def set_fingerbot_program_repeat_forever(
         datapoint = self._device.datapoints[product.fingerbot.program]
         if datapoint and type(datapoint.value) is bytes:
             new_value = (
-                int.to_bytes(0xFFFF if value else 1, 2, "big") + 
-                datapoint.value[2:]
+                int.to_bytes(0xFFFF if value else 1, 2, "big") + datapoint.value[2:]
             )
             self._hass.create_task(datapoint.set_value(new_value))
 
@@ -163,7 +158,7 @@ mapping: dict[str, TuyaBLECategorySwitchMapping] = {
     "ms": TuyaBLECategorySwitchMapping(
         products={
             **dict.fromkeys(
-                ["ludzroix", "isk2p555"], # Smart Lock
+                ["ludzroix", "isk2p555"],  # Smart Lock
                 [
                     TuyaBLESwitchMapping(
                         dp_id=47,
@@ -171,7 +166,7 @@ mapping: dict[str, TuyaBLECategorySwitchMapping] = {
                             key="lock_motor_state",
                         ),
                     ),
-                ]
+                ],
             ),
         }
     ),
@@ -185,12 +180,7 @@ mapping: dict[str, TuyaBLECategorySwitchMapping] = {
                 ],
             ),
             **dict.fromkeys(
-                [
-                    "blliqpsj",
-                    "ndvkgsrm",
-                    "yiihr7zh",
-                    "neq16kgd"
-                ],  # Fingerbot Plus
+                ["blliqpsj", "ndvkgsrm", "yiihr7zh", "neq16kgd"],  # Fingerbot Plus
                 [
                     TuyaBLEFingerbotSwitchMapping(dp_id=2),
                     TuyaBLEReversePositionsMapping(dp_id=11),

@@ -15,10 +15,10 @@ from homeassistant.config_entries import ConfigEntry
 from homeassistant.const import (
     CONCENTRATION_PARTS_PER_MILLION,
     PERCENTAGE,
-    #TIME_MINUTES,
-    #TIME_SECONDS,
+    # TIME_MINUTES,
+    # TIME_SECONDS,
     UnitOfTime,
-    #VOLUME_MILLILITERS,
+    # VOLUME_MILLILITERS,
     UnitOfVolume,
     UnitOfTemperature,
 )
@@ -39,9 +39,7 @@ TuyaBLENumberGetter = (
 )
 
 
-TuyaBLENumberIsAvailable = (
-    Callable[["TuyaBLENumber", TuyaBLEProductInfo], bool] | None
-)
+TuyaBLENumberIsAvailable = Callable[["TuyaBLENumber", TuyaBLEProductInfo], bool] | None
 
 
 TuyaBLENumberSetter = (
@@ -138,10 +136,7 @@ def set_fingerbot_program_repeat_count(
     if product.fingerbot and product.fingerbot.program:
         datapoint = self._device.datapoints[product.fingerbot.program]
         if datapoint and type(datapoint.value) is bytes:
-            new_value = (
-                int.to_bytes(int(value), 2, "big") +
-                datapoint.value[2:]
-            )
+            new_value = int.to_bytes(int(value), 2, "big") + datapoint.value[2:]
             self._hass.create_task(datapoint.set_value(new_value))
 
 
@@ -271,12 +266,7 @@ mapping: dict[str, TuyaBLECategoryNumberMapping] = {
                 ],
             ),
             **dict.fromkeys(
-                [
-                    "blliqpsj",
-                    "ndvkgsrm",
-                    "yiihr7zh",
-                    "neq16kgd"
-                ],  # Fingerbot Plus
+                ["blliqpsj", "ndvkgsrm", "yiihr7zh", "neq16kgd"],  # Fingerbot Plus
                 [
                     TuyaBLENumberMapping(
                         dp_id=9,
@@ -397,8 +387,7 @@ mapping: dict[str, TuyaBLECategoryNumberMapping] = {
     ),
     "znhsb": TuyaBLECategoryNumberMapping(
         products={
-            "cdlandip":  # Smart water bottle
-            [
+            "cdlandip": [  # Smart water bottle
                 TuyaBLENumberMapping(
                     dp_id=103,
                     description=NumberEntityDescription(
