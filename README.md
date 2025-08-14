@@ -99,10 +99,15 @@
       <td>Built-in battery and USB-C charging.</td>
     </tr>
     <tr>
-      <td>Temperature &amp; Humidity Sensors<br>(wsdcg)</td>
+      <td rowspan="2">Temperature &amp; Humidity Sensors<br>(wsdcg)</td>
       <td>Soil Moisture Sensor</td>
       <td>'ojzlzzsw'</td>
       <td>Monitors soil moisture levels.</td>
+    </tr>
+    <tr>
+      <td>Temperature Humidity Sensor</td>
+      <td>'jm6iasmb'</td>
+      <td>Monitors Temperature & Humidity levels.</td>
     </tr>
     <tr>
       <td>CO2 Sensors<br>(co2bj)</td>

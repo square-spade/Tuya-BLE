@@ -393,6 +393,20 @@ mapping: dict[str, TuyaBLECategoryNumberMapping] = {
                     ),
                 ),
             ],
+            "jm6iasmb": [  # Temperature Humidity Sensor
+                TuyaBLENumberMapping(
+                    dp_id=17,
+                    description=NumberEntityDescription(
+                        key="reporting_period",
+                        icon="mdi:timer",
+                        native_max_value=120,
+                        native_min_value=1,
+                        native_unit_of_measurement=UnitOfTime.MINUTES,
+                        native_step=1,
+                        entity_category=EntityCategory.CONFIG,
+                    ),
+                ),
+            ],
         },
     ),
     "znhsb": TuyaBLECategoryNumberMapping(

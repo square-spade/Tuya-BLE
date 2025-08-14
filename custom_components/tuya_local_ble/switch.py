@@ -313,6 +313,17 @@ mapping: dict[str, TuyaBLECategorySwitchMapping] = {
                     ),
                 ),
             ],
+            "jm6iasmb": [  # Temperature Humidity Sensor
+                TuyaBLESwitchMapping(
+                    dp_id=21,
+                    description=SwitchEntityDescription(
+                        key="switch",
+                        icon="mdi:thermometer",
+                        entity_category=EntityCategory.CONFIG,
+                        entity_registry_enabled_default=False,
+                    ),
+                ),
+            ],
         },
     ),
     "ggq": TuyaBLECategorySwitchMapping(
