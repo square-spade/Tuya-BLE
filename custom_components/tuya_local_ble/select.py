@@ -176,6 +176,19 @@ mapping: dict[str, TuyaBLECategorySelectMapping] = {
                     ),
                 ),
             ],
+            "jm6iasmb":  # Temperature Humidity Sensor
+            [
+                TuyaBLESelectMapping(
+                    dp_id=9,
+                    description=TemperatureUnitDescription(
+                        options=[
+                            UnitOfTemperature.CELSIUS,
+                            UnitOfTemperature.FAHRENHEIT,
+                        ],
+                        entity_registry_enabled_default=False,
+                    )
+                ),
+            ],
         },
     ),
     "znhsb": TuyaBLECategorySelectMapping(
