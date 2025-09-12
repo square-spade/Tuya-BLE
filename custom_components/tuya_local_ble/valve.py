@@ -33,9 +33,7 @@ from .tuya_ble import TuyaBLEDataPointType, TuyaBLEDevice
 _LOGGER = logging.getLogger(__name__)
 
 
-TuyaBLEValveGetter = (
-    Callable[["TuyaBLEValve", TuyaBLEProductInfo], bool | None] | None
-)
+TuyaBLEValveGetter = Callable[["TuyaBLEValve", TuyaBLEProductInfo], bool | None] | None
 
 
 TuyaBLEValveIsAvailable = Callable[["TuyaBLEValve", TuyaBLEProductInfo], bool] | None
@@ -54,6 +52,8 @@ class TuyaBLEValveMapping:
     is_available: TuyaBLEValveIsAvailable = None
     getter: TuyaBLEValveGetter = None
     setter: TuyaBLESValveSetter = None
+
+
 def get_mapping_by_device(device: TuyaBLEDevice) -> list[TuyaBLECategoryValveMapping]:
     category = mapping.get(device.category)
     if category is not None and category.products is not None:
