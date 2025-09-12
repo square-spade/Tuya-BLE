@@ -28,6 +28,7 @@ PLATFORMS: list[Platform] = [
     Platform.SWITCH,
     Platform.TEXT,
     Platform.LOCK,
+    Platform.VALVE,
 ]
 
 _LOGGER = logging.getLogger(__name__)
