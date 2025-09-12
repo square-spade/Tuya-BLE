@@ -369,9 +369,9 @@ mapping: dict[str, TuyaBLECategorySensorMapping] = {
             "svhikeyq": [  
                 TuyaBLEBatteryMapping(dp_id=7),
                 TuyaBLESensorMapping(
-                    dp_id=11,
+                    dp_id=9,
                     description=SensorEntityDescription(
-                        key="time_left",
+                        key="time_use",
                         device_class=SensorDeviceClass.DURATION,
                         native_unit_of_measurement=UnitOfTime.SECONDS,
                         state_class=SensorStateClass.MEASUREMENT,
