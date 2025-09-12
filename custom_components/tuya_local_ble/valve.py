@@ -1,17 +1,5 @@
-import datetime
-import logging
-from datetime import timedelta
-from typing import Any
-
 import voluptuous as vol
-from homeassistant.components.valve import (
-    ValveDeviceClass,
-    ValveEntity,
-    ValveEntityFeature,
-)
-from homeassistant.components.valve.const import (
-    DOMAIN as VALVE_DOMAIN,
-)
+
 from homeassistant.config_entries import ConfigEntry
 from homeassistant.const import ATTR_ENTITY_ID
 from homeassistant.core import HomeAssistant
@@ -19,7 +7,54 @@ from homeassistant.helpers import config_validation as cv
 from homeassistant.helpers.entity_platform import AddEntitiesCallback
 from homeassistant.util import dt
 
-def get_mapping_by_device(device: TuyaBLEDevice) -> list[TuyaBLECategorySwitchMapping]:
+from __future__ import annotations
+
+from dataclasses import dataclass, field
+
+import logging
+from typing import Any, Callable
+
+from homeassistant.config_entries import ConfigEntry
+from homeassistant.core import HomeAssistant
+from homeassistant.helpers.entity import EntityCategory
+from homeassistant.helpers.entity_platform import AddEntitiesCallback
+from homeassistant.helpers.update_coordinator import DataUpdateCoordinator
+
+from homeassistant.components.valve import (
+    ValveDeviceClass,
+    ValveEntity,
+    ValveEntityFeature,
+)
+
+from .const import DOMAIN
+from .devices import TuyaBLEData, TuyaBLEEntity, TuyaBLEProductInfo
+from .tuya_ble import TuyaBLEDataPointType, TuyaBLEDevice
+
+_LOGGER = logging.getLogger(__name__)
+
+
+TuyaBLEValveGetter = (
+    Callable[["TuyaBLEValve", TuyaBLEProductInfo], bool | None] | None
+)
+
+
+TuyaBLEValveIsAvailable = Callable[["TuyaBLEValve", TuyaBLEProductInfo], bool] | None
+
+
+TuyaBLEValveSetter = Callable[["TuyaBLEValve", TuyaBLEProductInfo, bool], None] | None
+
+
+@dataclass
+class TuyaBLEValveMapping:
+    dp_id: int
+    description: ValveEntityDescription
+    force_add: bool = True
+    dp_type: TuyaBLEDataPointType | None = None
+    bitmap_mask: bytes | None = None
+    is_available: TuyaBLEValveIsAvailable = None
+    getter: TuyaBLEValveGetter = None
+    setter: TuyaBLESValveSetter = None
+def get_mapping_by_device(device: TuyaBLEDevice) -> list[TuyaBLECategoryValveMapping]:
     category = mapping.get(device.category)
     if category is not None and category.products is not None:
         product_mapping = category.products.get(device.product_id)
@@ -33,8 +68,8 @@ def get_mapping_by_device(device: TuyaBLEDevice) -> list[TuyaBLECategorySwitchMa
         return []
 
 
-class TuyaBLESwitch(TuyaBLEEntity, SwitchEntity):
-    """Representation of a Tuya BLE Switch."""
+class TuyaBLEValve(TuyaBLEEntity, ValveEntity):
+    """Representation of a Tuya BLE Valve."""
 
     def __init__(
         self,
@@ -42,14 +77,14 @@ class TuyaBLESwitch(TuyaBLEEntity, SwitchEntity):
         coordinator: DataUpdateCoordinator,
         device: TuyaBLEDevice,
         product: TuyaBLEProductInfo,
-        mapping: TuyaBLESwitchMapping,
+        mapping: TuyaBLEValveMapping,
     ) -> None:
         super().__init__(hass, coordinator, device, product, mapping.description)
         self._mapping = mapping
 
     @property
-    def is_on(self) -> bool:
-        """Return true if switch is on."""
+    def is_open(self) -> bool:
+        """Return true if valve is open."""
 
         if self._mapping.getter:
             return self._mapping.getter(self, self._product)
@@ -70,7 +105,7 @@ class TuyaBLESwitch(TuyaBLEEntity, SwitchEntity):
                 return bool(datapoint.value)
         return False
 
-    def turn_on(self, **kwargs: Any) -> None:
+    def open_valve(self, **kwargs: Any) -> None:
         """Turn the switch on."""
         if self._mapping.setter:
             return self._mapping.setter(self, self._product, True)
@@ -97,8 +132,8 @@ class TuyaBLESwitch(TuyaBLEEntity, SwitchEntity):
         if datapoint:
             self._hass.create_task(datapoint.set_value(new_value))
 
-    def turn_off(self, **kwargs: Any) -> None:
-        """Turn the switch off."""
+    def close_valve(self, **kwargs: Any) -> None:
+        """Turn the valve off."""
         if self._mapping.setter:
             return self._mapping.setter(self, self._product, False)
 
@@ -141,13 +176,13 @@ async def async_setup_entry(
     """Set up the Tuya BLE sensors."""
     data: TuyaBLEData = hass.data[DOMAIN][entry.entry_id]
     mappings = get_mapping_by_device(data.device)
-    entities: list[TuyaBLESwitch] = []
+    entities: list[TuyaBLEValve] = []
     for mapping in mappings:
         if mapping.force_add or data.device.datapoints.has_id(
             mapping.dp_id, mapping.dp_type
         ):
             entities.append(
-                TuyaBLESwitch(
+                TuyaBLEValve(
                     hass,
                     data.coordinator,
                     data.device,
