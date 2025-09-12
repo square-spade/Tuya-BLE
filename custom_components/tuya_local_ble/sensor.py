@@ -376,6 +376,7 @@ mapping: dict[str, TuyaBLECategorySensorMapping] = {
                         native_unit_of_measurement=UnitOfTime.SECONDS,
                         state_class=SensorStateClass.MEASUREMENT,
                     ),
+                ),
                 TuyaBLESensorMapping(
                     dp_id=15,
                     description=SensorEntityDescription(
