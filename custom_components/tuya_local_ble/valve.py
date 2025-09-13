@@ -53,7 +53,7 @@ class TuyaBLEValveMapping:
     getter: TuyaBLEValveGetter = None
     setter: TuyaBLESValveSetter = None
 
-class TuyaBLECatergoryValveMapping:
+class TuyaBLECategoryValveMapping:
     products: dict[str, list[TuyaBLEValveMapping]] | None = None
     mapping: list[TuyaBLEValveMapping] | None = None
     
