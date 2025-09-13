@@ -53,10 +53,12 @@ class TuyaBLEValveMapping:
     getter: TuyaBLEValveGetter = None
     setter: TuyaBLESValveSetter = None
 
+
 class TuyaBLECategoryValveMapping:
     products: dict[str, list[TuyaBLEValveMapping]] | None = None
     mapping: list[TuyaBLEValveMapping] | None = None
-    
+
+
 def get_mapping_by_device(device: TuyaBLEDevice) -> list[TuyaBLECategoryValveMapping]:
     category = mapping.get(device.category)
     if category is not None and category.products is not None:
