@@ -181,7 +181,6 @@ mapping: dict[str, TuyaBLECategoryValveMapping] = {
                     description=ValveEntityDescription(
                         device_class="water",
                         reports_position=False,
-                        
                     ),
                 ),
             ]
