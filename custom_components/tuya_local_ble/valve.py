@@ -21,9 +21,8 @@ from homeassistant.helpers.entity_platform import AddEntitiesCallback
 from homeassistant.helpers.update_coordinator import DataUpdateCoordinator
 
 from homeassistant.components.valve import (
-    ValveDeviceClass,
+    ValveEntityDescription,
     ValveEntity,
-    ValveEntityFeature,
 )
 
 from .const import DOMAIN
@@ -84,7 +83,7 @@ class TuyaBLEValve(TuyaBLEEntity, ValveEntity):
         product: TuyaBLEProductInfo,
         mapping: TuyaBLEValveMapping,
     ) -> None:
-        super().__init__(hass, coordinator, device, product, mapping.description)
+        super().__init__(hass, coordinator, device, product, mapping.device_type)
         self._mapping = mapping
 
     @property
@@ -179,7 +178,11 @@ mapping: dict[str, TuyaBLECategoryValveMapping] = {
             "svhikeyq": [
                 TuyaBLEValveMapping(
                     dp_id=1,
-                    description=ValveEntityDescription(key="open_valve"),
+                    description=ValveEntityDescription(
+                        device_class="water",
+                        reports_position=False,
+                        
+                    ),
                 ),
             ]
         }
