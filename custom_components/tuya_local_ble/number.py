@@ -454,7 +454,6 @@ mapping: dict[str, TuyaBLECategoryNumberMapping] = {
 }
 
 
-
 def get_mapping_by_device(device: TuyaBLEDevice) -> list[TuyaBLECategoryNumberMapping]:
     category = mapping.get(device.category)
     if category is not None and category.products is not None:

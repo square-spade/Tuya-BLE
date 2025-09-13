@@ -167,10 +167,11 @@ class TuyaBLEValve(TuyaBLEEntity, ValveEntity):
             result = self._mapping.is_available(self, self._product)
         return result
 
+
 mapping: dict[str, TuyaBLECategoryValveMapping] = {
     "sfkzq": TuyaBLECategoryValveMapping(
         products={
-            "svhikeyq": [  
+            "svhikeyq": [
                 TuyaBLEValveMapping(
                     dp_id=1,
                     description=ValveEntityDescription(key="open_valve"),
@@ -179,7 +180,8 @@ mapping: dict[str, TuyaBLECategoryValveMapping] = {
         }
     ),
 }
-    
+
+
 async def async_setup_entry(
     hass: HomeAssistant,
     entry: ConfigEntry,
