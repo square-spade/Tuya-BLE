@@ -172,7 +172,7 @@ mapping: dict[str, TuyaBLECategoryValveMapping] = {
         products={
             "svhikeyq": [  
                 TuyaBLEValveMapping(
-                    dp_id=1
+                    dp_id=1,
                     description=ValveEntityDescription(key="open_valve"),
                 ),
             ]
