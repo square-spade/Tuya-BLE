@@ -366,7 +366,7 @@ mapping: dict[str, TuyaBLECategorySensorMapping] = {
     ),
     "sfkzq": TuyaBLECategorySensorMapping(
         products={
-            "svhikeyq": [  
+            "svhikeyq": [
                 TuyaBLEBatteryMapping(dp_id=7),
                 TuyaBLESensorMapping(
                     dp_id=9,
