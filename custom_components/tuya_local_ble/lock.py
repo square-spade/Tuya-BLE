@@ -37,13 +37,13 @@ from typing import Any
 @dataclass
 class TuyaBLELockMapping:
     dp_id: int
-    dp_id_lock: int | None = None
     dp_id_unlock: int
     dp_id_nop: int
     keep_connect_timer: int
     description: LockEntityDescription
     force_add: bool = True
     keep_connect: bool = False
+    dp_id_lock: int | None = None
     dp_type: TuyaBLEDataPointType | None = None
     is_available: TuyaBLELockIsAvailable = None
 
