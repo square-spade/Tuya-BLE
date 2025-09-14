@@ -179,6 +179,7 @@ mapping: dict[str, TuyaBLECategoryValveMapping] = {
                 TuyaBLEValveMapping(
                     dp_id=1,
                     description=ValveEntityDescription(
+                        key:"smart_tap"
                         device_class="water",
                         reports_position=False,
                         
